@@ -1,0 +1,72 @@
+{
+  "_comment": "Config runtime del dashboard. Editable sin tocar Module.js; cambios requieren re-publicar (publish-plugin.sh). Module.js tiene los mismos valores como DEFAULT_CONFIG (fallback si este archivo no carga). A futuro un backend puede servir este mismo shape y sobrescribirlo en caliente.",
+  "top5km": {
+    "windowDays": 7,
+    "activeVehicleCap": 300,
+    "tripsMaxVehicles": 30,
+    "tripsBatchSize": 4,
+    "source": "trips-v3",
+    "count": 5,
+    "kmField": "gps"
+  },
+  "fleet": {
+    "scope": "all",
+    "maxVehicles": 1500
+  },
+  "ui": {
+    "preset": "rac",
+    "hiddenWidgets": ["violations"],
+    "background": "auto",
+    "backgroundDenseFrom": 9
+  },
+  "clock": {
+    "timeZone": "America/Santiago",
+    "locale": "es-CL",
+    "label": "Hora Oficial"
+  },
+  "ecoScore": {
+    "windowDays": 7,
+    "idleThresholdMin": 120
+  },
+  "borderAlert": {
+    "eventType": null,
+    "windowDays": 7,
+    "since": ""
+  },
+  "branches": {
+    "clientMap": []
+  },
+  "privacy": {
+    "maskPlates": false
+  },
+  "hotspots": {
+    "windowDays": 30,
+    "minGapSeconds": 120,
+    "shortGapMinSeconds": 10,
+    "shortGapMaxSeconds": 90,
+    "excludeBranches": true,
+    "excludeGroupPatterns": ["sucursal", "base"],
+    "excludeGroupNames": []
+  },
+  "fuel": {
+    "enabled": true,
+    "windowDays": 3,
+    "loadMinPct": 20,
+    "drainMinPct": 50,
+    "stationPattern": "copec",
+    "nativeOnly": true,
+    "windowMin": 30,
+    "maxGapMin": 360,
+    "stopSpeedKmh": 3,
+    "minSamples": 5,
+    "capacityHint": 0,
+    "agentIds": [],
+    "batchSize": 3,
+    "pauseMs": 1000,
+    "maxVehicles": 60,
+    "cacheMinutes": 30,
+    "catalogBatch": 20,
+    "catalogCacheHours": 24,
+    "debugRawMax": 3
+  }
+}
