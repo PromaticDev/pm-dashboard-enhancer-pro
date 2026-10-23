@@ -1,4 +1,4 @@
-Ext.define('Store.promatic_dashboard_enhancer.Module', {
+Ext.define('Store.promatic_dashboard_enhancer_pro.Module', {
     extend: 'Ext.Component',
     extensionName: 'promatic_dashboard_enhancer',
     // version es el SemVer de release y se sube a mano: minor por lote de
@@ -6,7 +6,7 @@ Ext.define('Store.promatic_dashboard_enhancer.Module', {
     // lo escribe el script de publicación en cada publicación: es el cache-
     // busting del CSS y la traza en consola. No es la versión.
     version: '0.27.5',
-    moduleBuild: '2026-10-23-1956',
+    moduleBuild: '2026-10-23-2044',
 
     statics: {
         DEBUG_STORAGE_KEY: 'promatic_dashboard_enhancer_debug',
@@ -3725,7 +3725,7 @@ Ext.define('Store.promatic_dashboard_enhancer.Module', {
             '/' + gps24 + '/' + gps48 + '/' + gpsMore + '/' + gpsNoData;
         if (sig !== this._fleetSig) {
             this._fleetSig = sig;
-            Store.promatic_dashboard_enhancer.Module.debugLog('flota: total=' + total +
+            Store.promatic_dashboard_enhancer_pro.Module.debugLog('flota: total=' + total +
                 ' online=' + (total - offlineCount) + ' offline=' + offlineCount +
                 ' | señal GPS <24h=' + gps24 + ' 24-48h=' + gps48 + ' >48h=' + gpsMore + ' sin dato=' + gpsNoData);
         }
@@ -3971,7 +3971,7 @@ Ext.define('Store.promatic_dashboard_enhancer.Module', {
                 me._alertAccidentes = r[0];
                 me._alertMantencion = r[1];
                 me._alertBorder = r[2];
-                Store.promatic_dashboard_enhancer.Module.debugLog('alertas generales: accidentes=' +
+                Store.promatic_dashboard_enhancer_pro.Module.debugLog('alertas generales: accidentes=' +
                     r[0] + ' requiere_mantencion=' + r[1] + ' paso_fronterizo=' + r[2]);
                 // Combustible corre aparte (lotes con pausa) y vuelve a
                 // dibujar las tarjetas al terminar; no demora las demás.
@@ -4115,7 +4115,7 @@ Ext.define('Store.promatic_dashboard_enhancer.Module', {
                 return resp.json();
             })
             .then(function (tree) {
-                Store.promatic_dashboard_enhancer.Module.debugLog('accidentes (events.php type=4911):', tree);
+                Store.promatic_dashboard_enhancer_pro.Module.debugLog('accidentes (events.php type=4911):', tree);
                 var vehicles = Array.isArray(tree) ? tree : [];
                 var seenEventIds = {}, rows = [];
                 for (var v = 0; v < vehicles.length; v++) {
@@ -4184,7 +4184,7 @@ Ext.define('Store.promatic_dashboard_enhancer.Module', {
                 return resp.json();
             })
             .then(function (tree) {
-                Store.promatic_dashboard_enhancer.Module.debugLog('paso fronterizo (events.php type=' + eventType + '):', tree);
+                Store.promatic_dashboard_enhancer_pro.Module.debugLog('paso fronterizo (events.php type=' + eventType + '):', tree);
                 var vehicles = Array.isArray(tree) ? tree : [];
                 var seenEventIds = {}, rows = [];
                 for (var v = 0; v < vehicles.length; v++) {
@@ -4543,7 +4543,7 @@ Ext.define('Store.promatic_dashboard_enhancer.Module', {
                     return resp.json();
                 })
                 .then(function (data) {
-                    Store.promatic_dashboard_enhancer.Module.debugLog('mantención sondeo ' + endpoints[i].url + ':', data);
+                    Store.promatic_dashboard_enhancer_pro.Module.debugLog('mantención sondeo ' + endpoints[i].url + ':', data);
                     var items = (data && (data.data || data.items || data.list || data.rows)) || [];
                     if (!Array.isArray(items)) {
                         // a veces viene como objeto keyed por id
@@ -5047,7 +5047,7 @@ Ext.define('Store.promatic_dashboard_enhancer.Module', {
                     return resp.json();
                 }).then(function (data) {
                     var sensors = me._parseSensorCatalog(data);
-                    Store.promatic_dashboard_enhancer.Module.debugLog('combustible: catálogo de sensores, lote ' + (bi + 1) + '/' + batches.length +
+                    Store.promatic_dashboard_enhancer_pro.Module.debugLog('combustible: catálogo de sensores, lote ' + (bi + 1) + '/' + batches.length +
                         ': ' + ids.length + ' vehículos, ' + sensors.length + ' sensores', bi === 0 ? data : '');
                     var seen = {};
                     sensors.forEach(function (sn) { seen[sn.agentId] = 1; });
@@ -5105,7 +5105,7 @@ Ext.define('Store.promatic_dashboard_enhancer.Module', {
         }
         me._fuelRunning = true;
         me._fuelPerVeh = me._fuelPerVeh || {};
-        var dbg = Store.promatic_dashboard_enhancer.Module.debugLog.bind(Store.promatic_dashboard_enhancer.Module);
+        var dbg = Store.promatic_dashboard_enhancer_pro.Module.debugLog.bind(Store.promatic_dashboard_enhancer_pro.Module);
         var breakerKey = 'reports.php:report_type=16';
         var ttl = cfg.cacheMinutes * 60000;
         var now = Date.now();
@@ -6123,7 +6123,7 @@ Ext.define('Store.promatic_dashboard_enhancer.Module', {
             }
         }
 
-        Store.promatic_dashboard_enhancer.Module.debugLog('eco score (report_type=223): ' + rows.length +
+        Store.promatic_dashboard_enhancer_pro.Module.debugLog('eco score (report_type=223): ' + rows.length +
             ' vehículos, ' + days + 'd, global=' + globalScore + '% (previo ' + globalPrev +
             '%), ' + folderStats.length + ' carpetas' +
             (specificFolder ? ', específica=' + specificFolder.label : ''));
@@ -6663,13 +6663,13 @@ Ext.define('Store.promatic_dashboard_enhancer.Module', {
                         short: toPoints(bucketsShort)
                     };
 
-                    Store.promatic_dashboard_enhancer.Module.debugLog('hotspots desconexión: ' + rawPoints.length +
+                    Store.promatic_dashboard_enhancer_pro.Module.debugLog('hotspots desconexión: ' + rawPoints.length +
                         ' cortes totales (report_type=73, ' + windowDays + 'd) — ' +
                         countLong + ' largos (>' + minGapSeconds + 's, ' + me._hotspotsPointsByMode.long.length + ' celdas), ' +
                         countShort + ' breves (' + shortMin + '-' + shortMax + 's, ' + me._hotspotsPointsByMode.short.length + ' celdas)' +
                         (me._mapFolderFilter ? ' (carpeta ' + me._mapFolderFilter + ')' : ''));
 
-                    Store.promatic_dashboard_enhancer.Module.debugLog('hotspots desconexión: histograma de duraciones (s)',
+                    Store.promatic_dashboard_enhancer_pro.Module.debugLog('hotspots desconexión: histograma de duraciones (s)',
                         me._durationHistogram(rawPoints));
                     me._paintHotspotsHeatmap();
                 })
@@ -6721,7 +6721,7 @@ Ext.define('Store.promatic_dashboard_enhancer.Module', {
         return ensure.then(function () {
             var zones = (me._lastGeofences || []).filter(function (g) { return me._isBranchGroupName(g.group_name, cfg); });
             if (!zones.length) {
-                Store.promatic_dashboard_enhancer.Module.debugLog('hotspots desconexión: sin geocercas de sucursal/base, no se filtran cortes');
+                Store.promatic_dashboard_enhancer_pro.Module.debugLog('hotspots desconexión: sin geocercas de sucursal/base, no se filtran cortes');
                 return points;
             }
             // Los cortes se repiten en el mismo punto: se resuelve una vez
@@ -6737,7 +6737,7 @@ Ext.define('Store.promatic_dashboard_enhancer.Module', {
                 }
                 if (!memo[k]) { kept.push(points[i]); }
             }
-            Store.promatic_dashboard_enhancer.Module.debugLog('hotspots desconexión: ' + (points.length - kept.length) +
+            Store.promatic_dashboard_enhancer_pro.Module.debugLog('hotspots desconexión: ' + (points.length - kept.length) +
                 ' cortes dentro de ' + zones.length + ' geocercas de sucursal/base descartados de ' + points.length);
             return kept;
         });
@@ -7123,7 +7123,7 @@ Ext.define('Store.promatic_dashboard_enhancer.Module', {
             });
         }
 
-        Store.promatic_dashboard_enhancer.Module.debugLog('ubicación global de la flota: ' + records.length +
+        Store.promatic_dashboard_enhancer_pro.Module.debugLog('ubicación global de la flota: ' + records.length +
             ' vehículos en alcance' + (this._fleetMapFolderFilter ? ' (carpeta ' + this._fleetMapFolderFilter + ')' : '') +
             ', ' + withCoords + ' con coords' +
             (this._lastGeofences ? ', ' + branchMatches + ' con match de sucursal/base' : ''));
@@ -7696,7 +7696,7 @@ Ext.define('Store.promatic_dashboard_enhancer.Module', {
             ? Ext.DomHelper.markup({ cls: 'promatic_dashboard_enhancer-branch-veh-list', cn: rows })
             : Ext.DomHelper.markup({ cls: 'promatic_dashboard_enhancer-branch-veh-empty', html: l('Ningún vehículo dentro de esta sucursal ahora mismo.') });
 
-        Store.promatic_dashboard_enhancer.Module.debugLog('vehículos por sucursal: "' + geofence.name +
+        Store.promatic_dashboard_enhancer_pro.Module.debugLog('vehículos por sucursal: "' + geofence.name +
             '" — ' + matches.length + ' de ' + records.length + ' vehículos en alcance');
 
         var mount = Ext.get('promatic_dashboard_enhancer-branch-veh-list-mount');
@@ -8217,7 +8217,7 @@ Ext.define('Store.promatic_dashboard_enhancer.Module', {
                 e.sample = { type: g.type, points: raw && raw.length > 160 ? raw.slice(0, 160) + '…' : raw };
             }
         }
-        Store.promatic_dashboard_enhancer.Module.debugLog('geocercas por grupo (tipos, interpretables, muestra no interpretada):', groups);
+        Store.promatic_dashboard_enhancer_pro.Module.debugLog('geocercas por grupo (tipos, interpretables, muestra no interpretada):', groups);
     },
 
     // ---------------------------------------------------------------------
@@ -8354,7 +8354,7 @@ Ext.define('Store.promatic_dashboard_enhancer.Module', {
         }
         rows.sort(function (a, b) { return b.present - a.present || (a.name < b.name ? -1 : 1); });
 
-        Store.promatic_dashboard_enhancer.Module.debugLog('sucursales LOP: ' + totals.scope + ' vehículos en alcance, ' +
+        Store.promatic_dashboard_enhancer_pro.Module.debugLog('sucursales LOP: ' + totals.scope + ' vehículos en alcance, ' +
             totals.inside + ' dentro de una sucursal (' + rows.length + ' sucursales con vehículos), ' +
             totals.outside + ' fuera de toda sucursal, ' + totals.unmapped + ' sin cliente mapeado, ' +
             totals.noCoords + ' sin posición');
@@ -8394,7 +8394,7 @@ Ext.define('Store.promatic_dashboard_enhancer.Module', {
             }
             out.push({ veh: s.ll, masCercana: best, distInvertidaM: bestSw });
         }
-        Store.promatic_dashboard_enhancer.Module.debugLog('sucursales LOP: sin ningún match; geocerca más cercana de 5 vehículos de muestra:', out);
+        Store.promatic_dashboard_enhancer_pro.Module.debugLog('sucursales LOP: sin ningún match; geocerca más cercana de 5 vehículos de muestra:', out);
     },
 
     renderLopBranches: function () {
@@ -8654,11 +8654,11 @@ Ext.define('Store.promatic_dashboard_enhancer.Module', {
         }).then(function (res) {
             if (nonce !== me._lopFuelNonce) { return; }
             if (res.resps.length) {
-                Store.promatic_dashboard_enhancer.Module.debugLog('combustible (report_type=6), forma de la 1.ª respuesta:', me._lopDescribeResp(res.resps[0]));
+                Store.promatic_dashboard_enhancer_pro.Module.debugLog('combustible (report_type=6), forma de la 1.ª respuesta:', me._lopDescribeResp(res.resps[0]));
             }
             var parsed = me._lopParseFuelResp(res.resps, cfg);
             if (!parsed.recognized) {
-                Store.promatic_dashboard_enhancer.Module.debugLog('combustible: respuesta no reconocida — ' + parsed.reason);
+                Store.promatic_dashboard_enhancer_pro.Module.debugLog('combustible: respuesta no reconocida — ' + parsed.reason);
                 me._lopFuel = null;
                 me.updateCardBody(id, me._lopDevMarkup(res.resps.length === 0
                     ? l('Combustible: el reporte no respondió.') : l('Combustible: formato de reporte aún no reconocido.')), 0, true);
@@ -8669,7 +8669,7 @@ Ext.define('Store.promatic_dashboard_enhancer.Module', {
             var analysis = me._lopFuelAnalysis(parsed.rows, cfg);
             me._lopFuel = { analysis: analysis, plan: plan, failed: res.failed, aborted: res.aborted, cols: parsed.cols, days: cfg.windowDays };
             me._lopCacheSet('fuel', sig, me._lopFuel);
-            Store.promatic_dashboard_enhancer.Module.debugLog('combustible: ' + parsed.rows.length + ' vehículos con fila, ' +
+            Store.promatic_dashboard_enhancer_pro.Module.debugLog('combustible: ' + parsed.rows.length + ' vehículos con fila, ' +
                 analysis.eligible.length + ' elegibles, ' + analysis.noNorm + ' sin norma de consumo, ' + analysis.lowKm +
                 ' bajo ' + cfg.minKm + ' km, mediana ' + (analysis.fleetMedian === null ? 'N/D' : analysis.fleetMedian.toFixed(1)) +
                 ' L/100 km, ' + analysis.flagged + ' en sobreconsumo; columnas', parsed.cols);
@@ -8974,14 +8974,14 @@ Ext.define('Store.promatic_dashboard_enhancer.Module', {
         }).then(function (res) {
             if (nonce !== me._lopTagNonce) { return; }
             if (res.resps.length) {
-                Store.promatic_dashboard_enhancer.Module.debugLog('TAG (report_type=96), forma de la 1.ª respuesta:', me._lopDescribeResp(res.resps[0]));
+                Store.promatic_dashboard_enhancer_pro.Module.debugLog('TAG (report_type=96), forma de la 1.ª respuesta:', me._lopDescribeResp(res.resps[0]));
             }
             // success:false (módulo sin habilitar) o ninguna respuesta útil
             // → "En desarrollo", nunca un 0 inventado.
             var usable = res.resps.filter(function (x) { return x && x.success !== false; });
             var parsed = me._lopParseTagResp(usable);
             if (!parsed.recognized) {
-                Store.promatic_dashboard_enhancer.Module.debugLog('TAG: sin datos reconocidos — ' + (parsed.reason || 'sin respuestas útiles'));
+                Store.promatic_dashboard_enhancer_pro.Module.debugLog('TAG: sin datos reconocidos — ' + (parsed.reason || 'sin respuestas útiles'));
                 me._lopTag = null;
                 me.updateCardBody(id, me._lopDevMarkup(l('Peajes (TAG): reporte no disponible o formato aún no reconocido en esta cuenta.')), 0, true);
                 return;
@@ -8991,7 +8991,7 @@ Ext.define('Store.promatic_dashboard_enhancer.Module', {
                 groupBy: parsed.groupBy, groupHeader: parsed.groupHeader, currency: parsed.currency,
                 queried: cand.ids.length, scope: cand.scope, failed: res.failed, aborted: res.aborted, days: cfg.windowDays };
             me._lopCacheSet('tag', sig, me._lopTag);
-            Store.promatic_dashboard_enhancer.Module.debugLog('TAG: ' + parsed.rows.length + (parsed.groupBy === 'vehicle' ? ' vehículos' : ' autopistas') +
+            Store.promatic_dashboard_enhancer_pro.Module.debugLog('TAG: ' + parsed.rows.length + (parsed.groupBy === 'vehicle' ? ' vehículos' : ' autopistas') +
                 ' con pasadas. Detalle de columnas y de dónde salió el vehículo:', parsed.diag);
             me.renderLopTag();
         }).catch(function (err) {
@@ -9239,7 +9239,7 @@ Ext.define('Store.promatic_dashboard_enhancer.Module', {
         }
         var a = this._lopMaintenanceAnalysis(rows, cfg);
         this._lopMaint = { analysis: a, total: rows.length, cfg: cfg };
-        Store.promatic_dashboard_enhancer.Module.debugLog('mantención por km: ' + rows.length + ' vehículos, ' + a.rows.length +
+        Store.promatic_dashboard_enhancer_pro.Module.debugLog('mantención por km: ' + rows.length + ' vehículos, ' + a.rows.length +
             ' con odómetro, ' + a.high + ' sobre ' + cfg.highOdometerKm + ' km, ' + a.due + ' próximos a servicio');
 
         if (a.rows.length === 0) {
@@ -9999,7 +9999,7 @@ Ext.define('Store.promatic_dashboard_enhancer.Module', {
                 capped = true;
             }
 
-            Store.promatic_dashboard_enhancer.Module.debugLog('Top KM: ' + vehIds.length +
+            Store.promatic_dashboard_enhancer_pro.Module.debugLog('Top KM: ' + vehIds.length +
                 (usedScopeFallback ? ' vehículos del alcance (sin filtro de actividad)'
                     : ' vehículos con movimiento en ' + days + 'd') +
                 ' (de ' + scopeTotal + ' en alcance)' +
@@ -10047,7 +10047,7 @@ Ext.define('Store.promatic_dashboard_enhancer.Module', {
                     .then(function (report) {
                         if (stale()) { return; }
                         me.renderTop5Km(me.parseReportType4(report, nameToId), days, startDate, stopDate, count);
-                        Store.promatic_dashboard_enhancer.Module.debugLog('Top KM servido por: reports');
+                        Store.promatic_dashboard_enhancer_pro.Module.debugLog('Top KM servido por: reports');
                     });
             };
             var runRatings = function () {
@@ -10056,7 +10056,7 @@ Ext.define('Store.promatic_dashboard_enhancer.Module', {
                     .then(function (mainData) {
                         if (stale()) { return; }
                         me.renderTop5Km(me.parseRatingsTop5(mainData), days, startDate, stopDate, count);
-                        Store.promatic_dashboard_enhancer.Module.debugLog('Top KM servido por: ratings');
+                        Store.promatic_dashboard_enhancer_pro.Module.debugLog('Top KM servido por: ratings');
                     });
             };
             var runTripsV3 = function () {
@@ -10069,7 +10069,7 @@ Ext.define('Store.promatic_dashboard_enhancer.Module', {
                             throw new Error('trips-v3 sin km > 0');
                         }
                         me.renderTop5Km(withKm, days, startDate, stopDate, count);
-                        Store.promatic_dashboard_enhancer.Module.debugLog('Top KM servido por: trips-v3 (' +
+                        Store.promatic_dashboard_enhancer_pro.Module.debugLog('Top KM servido por: trips-v3 (' +
                             tripIds.length + ' vehículos consultados)');
                     });
             };
@@ -10531,7 +10531,7 @@ Ext.define('Store.promatic_dashboard_enhancer.Module', {
                     dayOpt = explodeStore.findRecord('name', /^(por )?d[ií]as?$|^(per )?days?$|^дн/i, 0, false, false, false);
                     var optNames = [];
                     explodeStore.each(function (r) { optNames.push(r.get('name')); });
-                    Store.promatic_dashboard_enhancer.Module.debugLog('informe por día: opciones de "Dividir"', optNames);
+                    Store.promatic_dashboard_enhancer_pro.Module.debugLog('informe por día: opciones de "Dividir"', optNames);
                 }
                 var noSplit = dayOpt || (explodeStore && explodeStore.findRecord(
                     'name', /no dividir|don't split|do not split|не разбивать/i, 0, false, false, false));
@@ -10744,7 +10744,7 @@ Ext.define('Store.promatic_dashboard_enhancer.Module', {
                     if (on) { marked++; }
                 }
             });
-            Store.promatic_dashboard_enhancer.Module.debugLog('selectVehiclesInReports: ' + marked + '/' + want.length +
+            Store.promatic_dashboard_enhancer_pro.Module.debugLog('selectVehiclesInReports: ' + marked + '/' + want.length +
                 ' vehículos marcados en el panel Informes — elige el informe a generar');
         };
         Ext.defer(tryMark, 200);
@@ -10758,7 +10758,7 @@ Ext.define('Store.promatic_dashboard_enhancer.Module', {
                 return src.substring(0, src.lastIndexOf('/') + 1);
             }
         }
-        return '/store/promatic_dashboard_enhancer/';
+        return '/store/promatic_dashboard_enhancer_pro/';
     },
 
     /**
@@ -10793,7 +10793,7 @@ Ext.define('Store.promatic_dashboard_enhancer.Module', {
                     }
                 }
                 me.config = merged;
-                Store.promatic_dashboard_enhancer.Module.debugLog('config.json cargado', merged);
+                Store.promatic_dashboard_enhancer_pro.Module.debugLog('config.json cargado', merged);
             })
             .catch(function (err) {
                 me.config = me.DEFAULT_CONFIG;
@@ -10866,7 +10866,7 @@ Ext.define('Store.promatic_dashboard_enhancer.Module', {
                     }
                 }
                 me.config = merged;
-                Store.promatic_dashboard_enhancer.Module.debugLog('config remota aplicada');
+                Store.promatic_dashboard_enhancer_pro.Module.debugLog('config remota aplicada');
             })
             .catch(function (err) {
                 console.warn('[promatic_dashboard_enhancer] config remota no disponible (' +
